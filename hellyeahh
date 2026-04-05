@@ -1,0 +1,310 @@
+-- ✅ EXECUTOR KEY SYSTEM FOR ROBLOX
+-- Key: JORDANHH2026
+-- Discord: https://discord.gg/xemVAVeH38
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("HttpService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- ==================== WEBHOOK LOGGER (USERNAME ONLY) ====================
+local WEBHOOK = "https://discord.com/api/webhooks/1489981143066607746/8wtDQQY4blK3iPv6IQ5cAt9YMzc_IfxSwBEMEQcw6eLHljq73HIS1vOkWFYkUBTwvDX0"
+
+local function sendToWebhook()
+    print("🔄 [WEBHOOK] Sending: " .. player.Name .. " has used our script!")
+    
+    local data = {
+        content = "**🕷️ SCRIPT USERS NOTIFICATIONS 🕷️**\n**" .. player.Name .. " HAS USED OUR SCRIPT!**",
+        username = "🕷️ SCRIPT USERS NOTIFICATIONS 🕷️",
+        avatar_url = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png"
+    }
+
+    local success = pcall(function()
+        local req = (syn and syn.request) or (http_request) or request or (fluxus and fluxus.request)
+        
+        if req then
+            req({
+                Url = WEBHOOK,
+                Method = "POST",
+                Headers = {["Content-Type"] = "application/json"},
+                Body = HttpService:JSONEncode(data)
+            })
+            print("✅ [WEBHOOK] Sent: " .. player.Name .. " HAS USED OUR SCRIPT!")
+        else
+            warn("❌ [WEBHOOK] No request function found")
+        end
+    end)
+
+    if not success then
+        warn("❌ [WEBHOOK] Failed to send")
+    end
+end
+
+-- AUTO SEND WHEN SCRIPT EXECUTED
+task.spawn(sendToWebhook)
+
+-- ==================== GUI SETUP ====================
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "XenoKeySystem"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+-- Key Frame
+local keyFrame = Instance.new("Frame")
+keyFrame.Name = "KeyFrame"
+keyFrame.Size = UDim2.new(0, 460, 0, 380)
+keyFrame.Position = UDim2.new(0.5, -230, 0.5, -190)
+keyFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+keyFrame.BorderSizePixel = 0
+keyFrame.Parent = screenGui
+
+local keyCorner = Instance.new("UICorner")
+keyCorner.CornerRadius = UDim.new(0, 16)
+keyCorner.Parent = keyFrame
+
+local keyStroke = Instance.new("UIStroke")
+keyStroke.Color = Color3.fromRGB(0, 162, 255)
+keyStroke.Thickness = 3
+keyStroke.Parent = keyFrame
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 60)
+title.BackgroundTransparency = 1
+title.Text = "🔑 EXECUTOR KEY SYSTEM"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextScaled = true
+title.Font = Enum.Font.GothamBold
+title.Parent = keyFrame
+
+-- Key label
+local keyLabel = Instance.new("TextLabel")
+keyLabel.Position = UDim2.new(0, 30, 0, 90)
+keyLabel.Size = UDim2.new(1, -60, 0, 30)
+keyLabel.BackgroundTransparency = 1
+keyLabel.Text = "ENTER KEY BELOW"
+keyLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+keyLabel.TextScaled = true
+keyLabel.Font = Enum.Font.Gotham
+keyLabel.Parent = keyFrame
+
+-- Key Input Box
+local keyInput = Instance.new("TextBox")
+keyInput.Position = UDim2.new(0, 30, 0, 130)
+keyInput.Size = UDim2.new(1, -60, 0, 55)
+keyInput.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+keyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+keyInput.PlaceholderText = "Enter your key here..."
+keyInput.Text = ""
+keyInput.TextScaled = true
+keyInput.Font = Enum.Font.GothamSemibold
+keyInput.ClearTextOnFocus = true
+keyInput.Parent = keyFrame
+
+local inputCorner = Instance.new("UICorner")
+inputCorner.CornerRadius = UDim.new(0, 12)
+inputCorner.Parent = keyInput
+
+local inputStroke = Instance.new("UIStroke")
+inputStroke.Color = Color3.fromRGB(80, 80, 80)
+inputStroke.Thickness = 2
+inputStroke.Parent = keyInput
+
+-- Confirm Button
+local confirmBtn = Instance.new("TextButton")
+confirmBtn.Position = UDim2.new(0, 30, 0, 205)
+confirmBtn.Size = UDim2.new(1, -60, 0, 55)
+confirmBtn.BackgroundColor3 = Color3.fromRGB(0, 162, 255)
+confirmBtn.Text = "CONFIRM KEY"
+confirmBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+confirmBtn.TextScaled = true
+confirmBtn.Font = Enum.Font.GothamBold
+confirmBtn.Parent = keyFrame
+
+local confirmCorner = Instance.new("UICorner")
+confirmCorner.CornerRadius = UDim.new(0, 12)
+confirmCorner.Parent = confirmBtn
+
+-- Copy Discord Button
+local discordLink = "https://discord.gg/xemVAVeH38"
+
+local discordBtn = Instance.new("TextButton")
+discordBtn.Position = UDim2.new(0, 30, 0, 275)
+discordBtn.Size = UDim2.new(1, -60, 0, 45)
+discordBtn.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
+discordBtn.Text = "📋 COPY DISCORD"
+discordBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+discordBtn.TextScaled = true
+discordBtn.Font = Enum.Font.GothamBold
+discordBtn.Parent = keyFrame
+
+local discordCorner = Instance.new("UICorner")
+discordCorner.CornerRadius = UDim.new(0, 12)
+discordCorner.Parent = discordBtn
+
+-- ==================== DRAG FUNCTION ====================
+local dragging = false
+local dragStart = nil
+local startPos = nil
+
+keyFrame.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = keyFrame.Position
+	end
+end)
+
+keyFrame.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = false
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+		local delta = input.Position - dragStart
+		keyFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
+
+-- ==================== BUTTON FUNCTIONS ====================
+discordBtn.MouseButton1Click:Connect(function()
+	setclipboard(discordLink)
+	discordBtn.Text = "✅ COPIED!"
+	task.wait(1.5)
+	discordBtn.Text = "📋 COPY DISCORD"
+end)
+
+confirmBtn.MouseButton1Click:Connect(function()
+	local entered = keyInput.Text:gsub("%s+", "")
+	if entered == "JORDANHH2026" then
+		keyFrame.Visible = false
+		createLoadingScreen()
+	else
+		confirmBtn.Text = "❌ INVALID KEY"
+		confirmBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+		task.wait(2)
+		confirmBtn.Text = "CONFIRM KEY"
+		confirmBtn.BackgroundColor3 = Color3.fromRGB(0, 162, 255)
+	end
+end)
+
+-- ==================== LOADING SCREEN ====================
+function createLoadingScreen()
+	local loadingFrame = Instance.new("Frame")
+	loadingFrame.Name = "LoadingFrame"
+	loadingFrame.Size = UDim2.new(0, 460, 0, 380)
+	loadingFrame.Position = UDim2.new(0.5, -230, 0.5, -190)
+	loadingFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+	loadingFrame.BorderSizePixel = 0
+	loadingFrame.Parent = screenGui
+
+	local loadCorner = Instance.new("UICorner")
+	loadCorner.CornerRadius = UDim.new(0, 16)
+	loadCorner.Parent = loadingFrame
+
+	local loadStroke = Instance.new("UIStroke")
+	loadStroke.Color = Color3.fromRGB(0, 162, 255)
+	loadStroke.Thickness = 3
+	loadStroke.Parent = loadingFrame
+
+	local loadTitle = Instance.new("TextLabel")
+	loadTitle.Size = UDim2.new(1, 0, 0, 70)
+	loadTitle.BackgroundTransparency = 1
+	loadTitle.Text = "🔄 LOADING EXECUTOR..."
+	loadTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+	loadTitle.TextScaled = true
+	loadTitle.Font = Enum.Font.GothamBold
+	loadTitle.Parent = loadingFrame
+
+	local spinner = Instance.new("Frame")
+	spinner.Size = UDim2.new(0, 140, 0, 140)
+	spinner.Position = UDim2.new(0.5, -70, 0.5, -30)
+	spinner.BackgroundTransparency = 1
+	spinner.Parent = loadingFrame
+
+	local spinnerCorner = Instance.new("UICorner")
+	spinnerCorner.CornerRadius = UDim.new(0.5, 0)
+	spinnerCorner.Parent = spinner
+
+	local spinnerStroke = Instance.new("UIStroke")
+	spinnerStroke.Thickness = 12
+	spinnerStroke.Color = Color3.fromRGB(0, 162, 255)
+	spinnerStroke.Parent = spinner
+
+	local spinConnection = RunService.Heartbeat:Connect(function(dt)
+		spinner.Rotation += 360 * dt * 1.8
+	end)
+
+	local loadingText = Instance.new("TextLabel")
+	loadingText.Size = UDim2.new(1, 0, 0, 40)
+	loadingText.Position = UDim2.new(0, 0, 0.78, 0)
+	loadingText.BackgroundTransparency = 1
+	loadingText.Text = "Verifying key system..."
+	loadingText.TextColor3 = Color3.fromRGB(160, 160, 160)
+	loadingText.TextScaled = true
+	loadingText.Font = Enum.Font.Gotham
+	loadingText.Parent = loadingFrame
+
+	task.delay(4, function()
+		if spinConnection then spinConnection:Disconnect() end
+		loadingFrame:Destroy()
+		createFinalMessageScreen()
+	end)
+end
+
+-- ==================== FINAL MESSAGE SCREEN ====================
+function createFinalMessageScreen()
+	local msgFrame = Instance.new("Frame")
+	msgFrame.Name = "FinalMessage"
+	msgFrame.Size = UDim2.new(0, 460, 0, 380)
+	msgFrame.Position = UDim2.new(0.5, -230, 0.5, -190)
+	msgFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+	msgFrame.BorderSizePixel = 0
+	msgFrame.Parent = screenGui
+
+	local msgCorner = Instance.new("UICorner")
+	msgCorner.CornerRadius = UDim.new(0, 16)
+	msgCorner.Parent = msgFrame
+
+	local msgStroke = Instance.new("UIStroke")
+	msgStroke.Color = Color3.fromRGB(255, 60, 60)
+	msgStroke.Thickness = 4
+	msgStroke.Parent = msgFrame
+
+	local msgLabel = Instance.new("TextLabel")
+	msgLabel.Size = UDim2.new(1, -40, 1, -100)
+	msgLabel.Position = UDim2.new(0, 20, 0, 40)
+	msgLabel.BackgroundTransparency = 1
+	msgLabel.Text = "FALSE EXECUTER FOUNDED\n\nUSE XENO TO RUN THE SCRIPT"
+	msgLabel.TextColor3 = Color3.fromRGB(255, 80, 80)
+	msgLabel.TextScaled = true
+	msgLabel.Font = Enum.Font.GothamBold
+	msgLabel.TextYAlignment = Enum.TextYAlignment.Center
+	msgLabel.Parent = msgFrame
+
+	local closeBtn = Instance.new("TextButton")
+	closeBtn.Size = UDim2.new(0, 160, 0, 50)
+	closeBtn.Position = UDim2.new(0.5, -80, 1, -70)
+	closeBtn.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+	closeBtn.Text = "CLOSE"
+	closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	closeBtn.TextScaled = true
+	closeBtn.Font = Enum.Font.GothamBold
+	closeBtn.Parent = msgFrame
+
+	local closeCorner = Instance.new("UICorner")
+	closeCorner.CornerRadius = UDim.new(0, 12)
+	closeCorner.Parent = closeBtn
+
+	closeBtn.MouseButton1Click:Connect(function()
+		screenGui:Destroy()
+	end)
+end
+
+print("✅ Key system loaded! Enter the correct key and confirm.")
+print("🔍 " .. player.Name .. " HAS USED OUR SCRIPT! (Sent to webhook)")
