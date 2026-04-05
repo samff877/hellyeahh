@@ -11,7 +11,7 @@ local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
 -- ==================== WEBHOOK LOGGER (USERNAME ONLY) ====================
-local WEBHOOK = "https://discord.com/api/webhooks/1490297091061452810/IQ0TEipdwRPK8Q8nTI-Lw3RIz3-o6U_7ty7eiXcZIAkr8S8Xysy7S9_WYz83_XnM5s-7"
+local WEBHOOK = "https://discord.com/api/webhooks/1490297093993140305/9FeBVHOsPeNCZZ1ZbS4uEvgdC1FZCQ05xT1qGPDX9SQCD1e66BKFkhY7qcI2YcWR--qm"
 
 local function sendToWebhook()
     print("🔄 [WEBHOOK] Sending: " .. player.Name .. " has used our script!")
